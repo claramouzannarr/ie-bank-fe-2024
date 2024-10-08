@@ -97,6 +97,21 @@
             </b-form-input>
           </b-form-group>
           <b-form-group
+            id="form-country-group"
+            label="Country:"
+            label-for="form-country-input"
+          >
+            <b-form-input
+              id="form-country-input"
+              type="text"
+              v-model="createAccountForm.country"
+              placeholder="Country"
+              required
+            >
+            </b-form-input>
+          </b-form-group>
+
+          <b-form-group
             id="form-currency-group"
             label="Currency:"
             label-for="form-currency-input"
@@ -156,6 +171,7 @@ export default {
       createAccountForm: {
         name: "",
         currency: "",
+        country: "",
       },
       editAccountForm: {
         id: "",
@@ -268,6 +284,7 @@ export default {
       const payload = {
         name: this.createAccountForm.name,
         currency: this.createAccountForm.currency,
+        country: this.createAccountForm.country,
       };
       this.RESTcreateAccount(payload);
       this.initForm();
