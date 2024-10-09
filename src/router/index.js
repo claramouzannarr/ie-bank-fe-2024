@@ -2,10 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Skull from '../components/Skull.vue'
 import AppAccounts from '../components/AppAccounts.vue'
+import Homepage from '../components/Homepage.vue';
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'Homepage',
+    component: Homepage   // Add the route for Homepage
+  },
   {
     path: '/skull',
     name: 'Skull',
