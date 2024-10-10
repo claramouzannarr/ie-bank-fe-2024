@@ -24,6 +24,7 @@
             <thead>
               <tr>
                 <th scope="col">Account Name</th>
+                <th scope="col">Country</th>
                 <th scope="col">Account Number</th>
                 <th scope="col">Account Balance</th>
                 <th scope="col">Account Currency</th>
@@ -35,6 +36,7 @@
               <tr v-for="account in accounts" :key="account.id">
                 <td>{{ account.name }}</td>
                 <td>{{ account.account_number }}</td>
+                <td>{{ account.country }}</td>
                 <td>{{ account.balance }}</td>
                 <td>{{ account.currency }}</td>
                 <td>
@@ -296,6 +298,7 @@ export default {
       this.$refs.editAccountModal.hide(); //hide the modal when submitted
       const payload = {
         name: this.editAccountForm.name,
+        country: this.editAccountForm.country 
       };
       this.RESTupdateAccount(payload, this.editAccountForm.id);
       this.initForm();
@@ -303,8 +306,13 @@ export default {
 
     // Handle edit button
     editAccount(account) {
-      this.editAccountForm = account;
-    },
+      this.editAccountForm = { 
+      id: account.id, 
+      name: account.name, 
+      country: account.country
+      };
+    }, 
+
 
     // Handle Delete button
     deleteAccount(account) {
