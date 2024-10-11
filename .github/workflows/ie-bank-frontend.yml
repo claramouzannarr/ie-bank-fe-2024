@@ -6,11 +6,8 @@ name: ie-bank-frontend
 on:
   push:
     branches:
-      - "**"
-  pull_request:
-    branches:
-      - main  # Run when pull requests are created to main
-  workflow_dispatch:  # Allows manual trigger
+      - main
+  workflow_dispatch:
   
 
 env:
@@ -67,25 +64,48 @@ jobs:
           app-name: ${{ env.FRONTEND_WEBAPP_DEV }}
           package: .
 
-  deploy-uat:
+  build-uat:
     runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'  # Run only for main branch
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: npm install, build, and test (UAT)
+        run: |
+          npm install
+          npm run build:uat ## This command will build the Vue.js app using .env.uat variables
+
+      - name: Upload artifact for deployment job (UAT)
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app-uat
+          path: dist-uat/
+
+  deploy-uat:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: build-uat
     environment:
       name: 'UAT'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact from build-uat job
         uses: actions/download-artifact@v4
         with:
-          name: node-app-dev
+          name: node-app-uat
 
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      
-      - name: 'Deploy to Azure Web App (UAT)'
+
+      - name: 'Deploy to Azure Web App - UAT'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
