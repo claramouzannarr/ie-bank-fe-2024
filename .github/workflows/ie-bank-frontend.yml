@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  FRONTEND_WEBAPP_DEV: claramouzannar-fe-dev
-  FRONTEND_WEBAPP_UAT: claramouzannar-fe-uat
+  FRONTEND_WEBAPP_DEV: zalsaheb-fe-dev
+  FRONTEND_WEBAPP_UAT: zalsaheb-fe-uat
 
 jobs:
   build-dev:
@@ -35,7 +35,6 @@ jobs:
           path: dist-dev/
 
   deploy-dev:
-    #only activate when making a push or manually
     runs-on: ubuntu-latest
     needs: build-dev
     environment:
@@ -83,7 +82,6 @@ jobs:
           path: dist-uat/
 
   deploy-uat:
-    #only activate when making a pull request on main or manually
     runs-on: ubuntu-latest
     needs: build-uat
     environment:
