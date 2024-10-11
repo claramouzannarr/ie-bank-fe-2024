@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  FRONTEND_WEBAPP_DEV: akhreiche-fe-dev
-  FRONTEND_WEBAPP_UAT: akhreiche-fe-uat
+  FRONTEND_WEBAPP_DEV: claramouzannar-fe-dev
+  FRONTEND_WEBAPP_UAT: claramouzannar-fe-uat
 
 jobs:
   build-dev:
