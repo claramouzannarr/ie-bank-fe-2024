@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app-dev
-          path: dist/
+          path: dist-dev/
 
   deploy-dev:
     #only activate when making a push or manually
