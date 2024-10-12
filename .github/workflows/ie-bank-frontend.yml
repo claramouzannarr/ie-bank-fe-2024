@@ -1,9 +1,10 @@
+// ie-bank-frontend.yml:
 name: ie-bank-frontend
 
 on:
   push:
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
   workflow_dispatch:
 
 env:
@@ -35,7 +36,6 @@ jobs:
           path: dist-dev/
 
   deploy-dev:
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: build-dev
     environment:
@@ -83,7 +83,7 @@ jobs:
           path: dist-uat/
 
   deploy-uat:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     needs: build-uat
     environment:
